@@ -49,6 +49,9 @@ redmine plugin을 적용하고 restart를 해야하는데 POD restrat 문제라 
 ![](./img/error.png)
 
 
+- smtp 설정 중 535-5.7.8 username and password not accepted. learn more at 계정 정보가 정확한대 위와 같은 메시지가 출력된다면 구글 계정 -> 보안 -> 보안이 낮은 앱 엑세스를 허용
+
+
 
 ----
 
