@@ -22,7 +22,7 @@ openshift : okd4
 **진행 예정**
 
 - [x] plugin 추가
-- [x] thema 추가
+- [x] theme 추가
 
 
 **체크 리스트**
