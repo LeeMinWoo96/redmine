@@ -1,0 +1,63 @@
+{{- if .Values.postgresql.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgre
+  labels:
+    app: postgre
+    chart: postgre
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgre
+      release: {{ .Release.Name | quote }}
+  serviceName: redmine-db
+  template:
+    metadata:
+      name: postgre
+      labels:
+        app: postgre
+        chart: postgre
+        release: {{ .Release.Name | quote }}
+        heritage: {{ .Release.Service | quote }}
+    spec:
+      securityContext:
+        fsGroup: {{ .Values.securityContext.fsGroup }}
+        
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      containers:
+        - name: postgresql
+          image: {{ .Values.postgresql.image}}
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+          {{- if .Values.resources }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
+          {{- end }}
+          {{- if .Values.securityContext.enabled }}
+          securityContext:
+            runAsUser: {{ .Values.securityContext.runAsUser }}
+          {{- end }}
+          env:
+            - name: DB_USER
+              value:  {{  .Values.postgresql.postgresqlUsername }}
+            - name: DB_PASS
+              value: {{  .Values.postgresql.postgresqlPassword }}
+            - name: DB_NAME
+              value: {{  .Values.postgresql.postgresqlDatabase }}
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: db
+              mountPath: /var/lib/postgresql
+          securityContext:
+            privileged: true
+      {{- if .Values.persistence.enabled }}
+      volumes:
+      - name: db
+        persistentVolumeClaim:
+          claimName: {{ .Values.postgresql.persistence.pvcName }}
+      {{- end }}
+{{- end }}
+ 

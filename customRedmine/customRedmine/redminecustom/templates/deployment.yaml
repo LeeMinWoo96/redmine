@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redmine
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: redmine
+    component: redmine
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: redmine
+  template:
+    metadata:
+      labels:
+        app: redmine
+        component: redmine
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      containers:
+      - name: redmine
+        image: {{ .Values.image.repository }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+       # lifecycle:
+       #   postStart:
+       #     exec:
+       #       command: 
+       #         - "redmine-install-plugins"
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: DB_ADAPTER
+          value: "postgresql"
+       # - name: DB_HOST
+       #   value: {{ .Values.postgresql.host }}
+       # - name: DB_PORT
+       #   value: !!str {{ .Values.postgresql.port }}
+       # - name: DB_USER
+       #   value: {{ .Values.postgresql.postgresqlUsername }}
+       # - name: DB_PASS
+       #   value: {{ .Values.postgresql.postgresqlPassword }}
+       # - name: DB_NAME
+       #   value: {{ .Values.postgresql.postgresqlDatabase }}
+        - name: REDMINE_PORT
+          value: !!str {{ .Values.port }}
+        - name: REDMINE_HTTPS
+          value: !!str {{ .Values.https }}
+       # - name: REDMINE_RELATIVE_URL_ROOT
+       #   value: ""
+       # - name: REDMINE_SECRET_TOKEN
+       #   value: ""
+        - name: REDMINE_SUDO_MODE_ENABLED
+          value: "false"
+        - name: REDMINE_SUDO_MODE_TIMEOUT
+          value: "15"
+        - name: REDMINE_CONCURRENT_UPLOADS
+          value: "2"
+       # - name: REDMINE_BACKUP_SCHEDULE
+       #   value: ""
+       # - name: REDMINE_BACKUP_EXPIRY
+       #   value: ""
+       # - name: REDMINE_BACKUP_TIME
+       #   value: ""
+       # - name: SMTP_ENABLED
+       #   value: "false"
+       # - name: SMTP_METHOD
+       #   value: "smtp"
+       # - name: SMTP_DOMAIN
+       #   value: "www.example.com"
+       # - name: SMTP_HOST
+       #   value: "smtp.gmail.com"
+       # - name: SMTP_PORT
+       #   value: "587"
+       # - name: SMTP_USER
+       #   value: "mailer@example.com"
+       # - name: SMTP_PASS
+       #   value: "password"
+       # - name: SMTP_STARTTLS
+       #   value: "true"
+       # - name: SMTP_AUTHENTICATION
+       #   value: ":login"   
+       # - name: IMAP_ENABLED
+       #   value: "false"
+       # - name: IMAP_HOST
+       #   value: "imap.gmail.com"
+       # - name: IMAP_PORT
+       #   value: "993"
+       # - name: IMAP_USER
+       #   value: "mailer@example.com"
+       # - name: IMAP_PASS
+       #   value: "password"
+       # - name: IMAP_SSL
+       #   value: "true"
+       # - name: IMAP_INTERVAL
+       #   value: "30"
+       # - name: UNICORN_WORKERS
+       #   value: "8"
+        envFrom:  
+        - secretRef:
+            name: redmine-env
+        ports:
+        - containerPort: 10083
+        volumeMounts:
+        - name: redmine-volume
+          mountPath: "/home/redmine/redmine/files"
+        securityContext:
+          privileged: true
+      volumes:
+      - name: redmine-volume
+        persistentVolumeClaim:
+          claimName: redmine

@@ -1,0 +1,20 @@
+{{- if .Values.postgresql.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: redmine-db
+    component: redmine-db
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: redmine-db
+  namespace: {{ .Release.Namespace }}
+spec:
+  ports:
+  - name: postgre
+    port: 5432
+    targetPort: 5432
+  selector:
+    app: postgre
+  type: ClusterIP
+{{- end }}

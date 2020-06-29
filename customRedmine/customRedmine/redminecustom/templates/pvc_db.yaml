@@ -1,0 +1,15 @@
+{{- if .Values.postgresql.enabled }}
+{{- if .Values.persistence.enabled }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.postgresql.persistence.pvcName }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size | quote }}
+  storageClassName: {{ .Values.postgresql.persistence.storageClass }}
+{{- end }}
+{{- end }}

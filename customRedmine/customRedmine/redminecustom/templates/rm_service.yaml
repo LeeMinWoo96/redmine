@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: redmine
+    component: redmine
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: redmine
+  namespace: {{ .Release.Namespace }}
+spec:
+  ports:
+  - name: http
+    port: {{ .Values.port }}
+  selector:
+    app: redmine  # pod 쪽
+  sessionAffinity: ClientIP
+  type: NodePort
+
