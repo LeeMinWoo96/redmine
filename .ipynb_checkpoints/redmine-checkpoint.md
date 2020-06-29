@@ -65,3 +65,6 @@ redmine plugin을 적용하고 restart를 해야하는데 POD restrat 문제라 
 [이미지 빌드2](https://brunch.co.kr/@cheuora/45)
 
 [이미지 빌드 시 에러](https://github.com/bitnami/bitnami-docker-redmine/issues/101)
+
+
+[참고 doker image](https://github.com/sameersbn/docker-redmine)

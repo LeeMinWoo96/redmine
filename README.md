@@ -32,9 +32,10 @@ Redmine(http://redmine.org/)은 프로젝트의 할 일을 관리하는 도구�
 이 repo 는
 *Redmine을 okd 환경에 올리는 helm chart*
 
+
 ---
 
 #### 참고 사이트
 
 [redmine 소개](https://racoonlotty.tistory.com/9)
-
+체 

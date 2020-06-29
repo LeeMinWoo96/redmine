@@ -1,3 +1,10 @@
+### 이미지 정보 
+1. 현 repo의 docker-redmine 디렉토리는 semeerin님이 만드신 redmine 이미지에 5개의 plugin과 theme를 추가해 둔 Dockerfile임으로 빌드해서 사용하면 된다.
+
+2. unicorn의 문제로 플러그인 다수를 동시에 진행할 수 없어 letency를 통해 순차적으로 진행하였다. 코드 정리는 안되어있는 상태임의로 타 플러그인을 적용하고 싶다면 entrypoint 를 수정해야한다. 
+
+3. docker-redmine 폴더의 plugin 디렉토리의 plugin과 theme가 추가된 파일이다.
+
 
 ### helm chart 올리는법
 
@@ -32,3 +39,12 @@
   
 ----------
 
+### SMTP 설정 방법
+
+*gmail 기준*
+
+- 기본 value 값이 gmail로 설정 되어 있다 만약 gmail을 사용하지 않으려면 SMTP 관련 domain,host,port 설정 등을 변경해줘야 한다.
+
+1. gmail 계정에 대한 정보를 설정해준다. 그리고 해당 구글 계정이 보안 정책을 낮춰야 한다. (구글 계정 -> 보안 -> 보안이 낮은 앱 엑세스를 허용)
+
+[참고 doker image](https://github.com/sameersbn/docker-redmine)
