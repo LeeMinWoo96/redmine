@@ -4,9 +4,10 @@
 
 image:
   #repository: sameersbn/redmine:4.1.1-2
-  repository: midnightsnackerrr/redmine:4.0.6
-  pullPolicy: IfNotPresent
-
+  #repository: midnightsnackerrr/redmine:4.0.6
+  repository: dlworl207/redmine
+  #pullPolicy: IfNotPresent
+  pullPolicy: Always
 imagePullSecrets: []
 
 replicas: 1
@@ -29,6 +30,10 @@ port: 80
 
 https: false
 
+sudo_mode:
+  enabled: "false"
+  timeout: 15
+  
 
 persistence:
   enabled: true
@@ -44,21 +49,27 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  storageClass: "nfs"
+  storageClass: ""
   accessMode: ReadWriteOnce
   size: 8Gi
+  selector: 
+    matchLabels:
+      app: redmine
 
 postgresql:
+
+  ## Set to false if bringing your own PostgreSQL.
+  enabled: false
   image: sameersbn/postgresql:9.6-4
-  host: redmine-db
-  postgresqlDatabase: redmine_production
-  postgresqlUsername: redmine
+  host: 192.168.1.6
+  postgresqlDatabase: redmine
+  postgresqlUsername: postgres
   ##
   ## If the password is not specified, postgresql will generate a random password
-  postgresqlPassword: password
-  port: 5432
+  postgresqlPassword: nsc2006
+  port: "5432"
   persistence:
-    enabled: true
+    enabled: false
     pvcName: redmine-psql
     storageClass: "nfs"
     accessMode: ReadWriteOnce
@@ -81,3 +92,24 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+
+
+smtp:
+  enabled: "true"
+  method: smtp
+  domain: www.goole.com
+  host: smtp.gmail.com
+  port: "587"
+  user: redmine.northstar@gmail.com
+  password: "!!aibig$$2020"
+  starttls: "true"
+  authentication: ":login"
+  
+imap:
+  enabled: "false"
+  host: iamp.gmail.com
+  port: "993"
+  user: asd@gmail.com
+  password: asd
+  ssl: "true"
+  interval: "30" 

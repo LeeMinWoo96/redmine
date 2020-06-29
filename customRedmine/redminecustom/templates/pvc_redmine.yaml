@@ -4,6 +4,7 @@ apiVersion: v1
 metadata:
   name: redmine
 spec:
+  selector: {{- .Values.persistence.selector | toYaml | trimSuffix "\n" | nindent 4 }}
   accessModes:
     - {{ .Values.persistence.accessMode | quote }}
   resources:
