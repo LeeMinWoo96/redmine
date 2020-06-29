@@ -1,0 +1,25 @@
+<%
+  heading = "#{options[:heading]} (#{entities_count})"
+%>
+<% if entities_count > 0 %>
+  <div id="<%= options[:module_name] %>_container" class="entity_references_container easy-dropper-target easy-drop-issue" data-drop-action="<%= entity.class.name.underscore %>" data-entity-id="<%= entity.id %>" data-issue-show="1">
+    <%= call_hook(:view_easy_entity_assignemnt_top, :entity => entity, :query => query, :entities => entities, :options => options) %>
+      <%# entity_cards_params = {:module_name => options[:module_name], :project_id => project, :source_entity_type => entity.class.name, :source_entity_id => entity, :referenced_entity_type => referenced_entity_type, :referenced_collection_name => options[:referenced_collection_name]}.merge!(query.to_params) %>
+      <% entity_cards_params = {} %>
+      <%= render_module_easy_box(options[:module_name], heading+':', {class: {heading: entity_css_icon(query.entity), container: 'module-inside'}, default: false}) do |m| %>
+        <% m.heading_links do %>
+          <%= link_to('', {}, :class => 'icon-slab', :remote => true, :data => {:display => 'slab'}, :title => l(:title_easy_card_display_changer_tile)) %>
+          <%= link_to('', {}, :class => 'icon-bullet-list', :remote => true, :data => {:display => 'list'}, :title => l(:title_easy_card_display_changer_list)) %>
+        <% end %>
+          <%= render(:partial => 'easy_entity_assignments/query_index', :locals => {
+                                                                      :entity => entity,
+                                                                      :query => query,
+                                                                      :project => project, :options => options, :referenced_entities => entities}) %>
+
+
+        <% if options[:context_menus_path] && respond_to?(options[:context_menus_path]) %>
+          <%# context_menu(send(options[:context_menus_path], {:project_id => project, :back_url => url_for(params)}), "##{options[:module_name]}_container") -%>
+        <% end %>
+      <% end %>
+    </div>
+<% end %>
