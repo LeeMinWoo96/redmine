@@ -51,6 +51,9 @@ redmine plugin을 적용하고 restart를 해야하는데 POD restrat 문제라 
 
 - smtp 설정 중 535-5.7.8 username and password not accepted. learn more at 계정 정보가 정확한대 위와 같은 메시지가 출력된다면 구글 계정 -> 보안 -> 보안이 낮은 앱 엑세스를 허용
 
+- 만약 기존 db 변경이나 생성되어있는 db위에 다시 올려서 db 설정을 맞춰줘야 할 수있다 만약 맞춰주지 않는다면 프로젝트 제거가 안이뤄질 수 있다.
+
+```bundle exec rake db:migrate RAILS_ENV=production``` 을 이용하여 다시 설정해준다.
 
 
 ----
