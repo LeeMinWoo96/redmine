@@ -26,7 +26,7 @@
   
 **현재 설치된 플러그인과 버전**
   
-![](./img/installedplugin.png)
+![](./img/installedplugin.PNG)
   
 -----------
 
