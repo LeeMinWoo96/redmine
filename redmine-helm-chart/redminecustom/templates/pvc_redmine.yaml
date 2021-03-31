@@ -1,0 +1,17 @@
+{{- if and .Values.persistence.enabled }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: redmine-dmsf
+spec:
+  selector:
+    matchLabels:
+      app : redmine-dmsf
+  accessModes:
+    - {{ .Values.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size | quote }}
+  storageClassName: {{ .Values.persistence.storageClass }}
+
+{{- end }}

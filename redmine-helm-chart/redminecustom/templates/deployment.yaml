@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redmine
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: redmine
+    component: redmine
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: redmine
+  template:
+    metadata:
+      labels:
+        app: redmine
+        component: redmine
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      containers:
+      - name: redmine
+        image: {{ .Values.image.repository }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+       # lifecycle:
+       #   postStart:
+       #     exec:
+       #       command: 
+       #         - "redmine-install-plugins"
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: DB_ADAPTER
+          value: "postgresql"
+        - name: REDMINE_PORT
+          value: !!str {{ .Values.port }}
+        - name: REDMINE_HTTPS
+          value: !!str {{ .Values.https }}
+        - name: REDMINE_SUDO_MODE_ENABLED
+          value: "false"
+        - name: REDMINE_SUDO_MODE_TIMEOUT
+          value: "15"
+        - name: REDMINE_CONCURRENT_UPLOADS
+          value: "2"
+        envFrom:  
+        - secretRef:
+            name: redmine-env
+        ports:
+        - containerPort: 10083
+        volumeMounts:
+        - name: redmine-volume-dmsf
+          mountPath: "/home/redmine/redmine/files/dmsf"
+        - name: redmine-volume-board
+          mountPath: "/home/redmine/data"
+        securityContext:
+          privileged: true
+      volumes:
+      - name: redmine-volume-dmsf
+        persistentVolumeClaim:
+          claimName: redmine-dmsf
+      - name: redmine-volume-board
+        persistentVolumeClaim:
+          claimName: redmine-board
+
+     

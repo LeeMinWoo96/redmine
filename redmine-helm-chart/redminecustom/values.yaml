@@ -33,7 +33,10 @@ https: false
 sudo_mode:
   enabled: "false"
   timeout: 15
-  
+
+git:
+  persistence:
+    storageClass : "nfs-client" 
 
 persistence:
   enabled: true
@@ -66,12 +69,12 @@ postgresql:
   postgresqlUsername: postgres
   ##
   ## If the password is not specified, postgresql will generate a random password
-  postgresqlPassword: 패스워드를 넣자(nsc)
+  postgresqlPassword: nsc2006
   port: "5432"
   persistence:
     enabled: false
     pvcName: redmine-psql
-    storageClass: "nfs"
+    storageClass: "nfs-client"
     accessMode: ReadWriteOnce
     size: 8Gi
     
@@ -101,7 +104,7 @@ smtp:
   host: smtp.gmail.com
   port: "587"
   user: redmine.northstar@gmail.com
-  password: "패스워드를 넣자"
+  password: "!!aibig$$2020"
   starttls: "true"
   authentication: ":login"
   
