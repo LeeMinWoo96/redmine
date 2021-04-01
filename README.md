@@ -33,6 +33,10 @@ Redmine(http://redmine.org/)은 프로젝트의 할 일을 관리하는 도구�
 *Redmine을 okd 환경에 올리는 helm chart*
 
 
+bitnamiHelmChart 의 경우 redmine 오리지널 helm차트 
+docker-redmine-custom 의 경우 사용할 몇개의 플러그인을 설치한 redmine docker 파일
+redmine-helm-chart 은 redmine 이미지를 쿠버네티스 환경에 올리기 위한 helm 차트(okd 환경)
+
 ---
 
 #### 참고 사이트
