@@ -12,7 +12,7 @@ cd customRedmine/docker-redmine-custom
 
 *구성 파일*
 
-![레드마인](./img/redmine_3.jpg)
+![레드마인](./img/redmine_3.JPG)
 
 - 현 repo의 docker-redmine 디렉토리는 semeerin님이 만드신 redmine 이미지에 5개의 plugin과 theme를 추가해 둔 Dockerfile
 -  *docker-redmine-custom/plugin 의 plugins 디렉토리에 가서 압축파일 해제*
