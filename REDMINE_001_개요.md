@@ -53,7 +53,7 @@ HELM 설치 가이드 : <http://redmine.aibigdata.northstar.co.kr/boards/3/topic
 
 1. jupyter hub(OKD 와 연결 될 수 있는 환경) 접속 후 oc login 
 2. Project 를 변경하여 HELM 을 통해 설치되어있는 차트 확인 
-![레드마인](./img/redmine_1.jpg)
+![레드마인](./img/redmine_1.JPG)
 
 
 *레드마인 HELM 차트 구조*
