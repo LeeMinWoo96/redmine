@@ -26,7 +26,8 @@ ENV RUBY_VERSION=2.4 \
 ENV REDMINE_INSTALL_DIR="${REDMINE_HOME}/redmine" \
     REDMINE_DATA_DIR="${REDMINE_HOME}/data" \
     REDMINE_BUILD_ASSETS_DIR="${REDMINE_ASSETS_DIR}/build" \
-    REDMINE_RUNTIME_ASSETS_DIR="${REDMINE_ASSETS_DIR}/runtime"
+    REDMINE_RUNTIME_ASSETS_DIR="${REDMINE_ASSETS_DIR}/runtime" \
+    NGINX_MAX_UPLOAD_SIZE="200m"
 
 COPY --from=add-apt-repositories /etc/apt/trusted.gpg /etc/apt/trusted.gpg
 

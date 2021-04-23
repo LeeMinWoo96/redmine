@@ -12,12 +12,12 @@ services:
 
   redmine:
     build: ./
-    image: sameersbn/redmine:4.0.6
+    image: spc/redmine:latest
     depends_on:
     - postgresql
     environment:
     - TZ=Asia/Kolkata
-
+    - NGINX_MAX_UPLOAD_SIZE=200m
     - DB_ADAPTER=postgresql
     - DB_HOST=postgresql
     - DB_PORT=5432
